@@ -1,2 +1,77 @@
-<a href="/C">C</a><br />
-<a href="/D">D</a>
+<!doctype HTML>
+<html>
+    <head>
+        <title>midi what</title>
+        <script src="/js/jquery-1.7.1.min.js" type="application/javascript"></script>
+        <script src="/js/jquery-ui-1.8.18.custom.min.js" type="application/javascript"></script>
+        <script src="/js/jquery.ui.touch.js" type="application/javascript"></script>
+        <link rel="stylesheet" type="text/css" href="/css/ui-darkness/jquery-ui-1.8.18.custom.css" />
+        <style type="text/css">
+    		BODY, HTML { height: 100%; margin: 0; padding: 0; }
+    		#container { width: 100%; height: 100%; }
+    		DIV.quadrant { 
+    			width: 50%;
+    			height: 50%;
+    			float: left;
+    		}
+    		#div1 { background-color: #F00; }
+    		#div2 { background-color: #0F0; }
+    		#div3 { background-color: #00F; }
+    		#div4 { background-color: #FF0; }
+	   </style>
+	   <script type="application/javascript">
+	       function sendNote(note, channel) {
+	           $.ajax({
+	               url: "/" + channel + "/" + note,
+	           });
+	       }
+	       $(document).keydown( function(event) {
+	       		switch(event.keyCode) {
+	       			case 65:
+	       				sendNote("G2", 0);
+	       				break;
+	       			case 83:
+	       				sendNote("B3", 0);
+	       				break;
+	       			case 68:
+	       				sendNote("D3",  0);
+	       				break;
+	       			case 70:
+	       				sendNote("F#3", 0);
+	       				break;
+	       			default:
+	       				sendNote("C3", 0);
+	       				break;
+	       		}
+	       	});
+	       	
+	       	$(document).ready(function() {
+	       		$('.slide').slider({
+	       			orientation: 'horizontal',
+	       			min: 0,
+	       			max: 127,
+	       			value: 50,
+	       			slide: function(event, ui) {
+	       						str = event.target.id;
+	       						sendNote(ui.value, str.charAt(str.length - 1));
+	       					}
+	       		});
+	       	});
+	       
+	   </script>
+    </head>
+    <body>
+        <div id="container">
+    		<div id="div1" class="quadrant" onClick="sendNote('G2');">
+    			<strong style="size: 10%;">G2</strong>
+    			<div id="slide0" class="slide" style="padding: 10px">&nbsp;</div>
+    			<div id="slide1" class="slide" style="padding: 10px">&nbsp;</div>
+    			<div id="slide2" class="slide" style="padding: 10px">&nbsp;</div>
+    			<div id="slide3" class="slide" style="padding: 10px">&nbsp;</div>
+    		</div>
+    		<div id="div2" class="quadrant" onClick="sendNote('B3');"><strong style="size: 10%;">B3</strong></div>
+    		<div id="div3" class="quadrant" onClick="sendNote('D3');"><strong style="size: 10%;">D3</strong></div>
+    		<div id="div4" class="quadrant" onClick="sendNote('F#3');"><strong style="size: 10%;">F#3</strong></div>
+		</div>
+    </body>
+</html>
