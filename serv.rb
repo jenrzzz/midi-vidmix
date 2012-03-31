@@ -13,7 +13,7 @@ class MIDIPlay
                                 or not note.to_i.between?(0, 127) \
                                 or not velocity.to_i.between?(0, 127))
         @route.puts (0x90 | channel), note, velocity
-        sleep(duration)
+        sleep(duration * 0.1)
         @route.puts (0x80 | channel), note, velocity
     end
 
